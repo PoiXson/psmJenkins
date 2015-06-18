@@ -22,10 +22,9 @@ try {
 	$dash = $source->getDashboard();
 	$jobs = $dash->getJobs();
 
-	echo '<table border="1" cellpadding="10">';
+	echo '<table border="1" cellpadding="10" width="500">';
 	echo '<tr>';
-	echo '	<th>Name</th>';
-	echo '	<th>Display</th>';
+	echo '	<th>Project</th>';
 	echo '	<th>State</th>';
 	echo '	<th>LastBuild</th>';
 	echo '</tr>';
@@ -37,12 +36,15 @@ try {
 			'DISABLED' => 'pink',
 	];
 	foreach($jobs as $name => $job) {
+		if($name == 'update-repos')
+			$url = 'http://dl.poixson.com/';
+		else
+			$url = 'http://dl.poixson.com/'.$name.'/';
 		echo '<tr>';
-		echo '	<td>'.$name.'</td>';
-		echo '	<td>'.$job['display'].'</td>';
-		echo '	<td style="background-color: '.$colors[$job['state']].';">'.
-				$job['state'].'</td>';
-		echo '	<td>'.$job['lastbuild'].'</td>';
+		echo '	<td><a href="'.$url.'"><font size="+1">'.$job['display'].'</font></a></td>';
+		echo '	<td align="center" style="background-color: '.$colors[$job['state']].';">'.
+				'<b>'.$job['state'].'</b></td>';
+		echo '	<td align="center">'.$job['lastbuild'].'</td>';
 		echo '</tr>';
 	}
 
